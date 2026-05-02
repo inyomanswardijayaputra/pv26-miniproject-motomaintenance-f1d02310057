@@ -380,26 +380,5 @@ class MainWindow(QMainWindow):
 
         dlg.exec()
 
-    def export_csv(self):
-        filepath, _ = QFileDialog.getSaveFileName(
-            self, "Export CSV", "Perpustakaan.csv", "CSV Files (*.csv)"
-        )
-        if not filepath:
-            return
-        
-        try:
-            data = self.db.ambil_semua()
-            with open(filepath, 'w', newline='', encoding='utf-8') as f:
-                writer = csv.writer(f)
-                writer.writerow(['ID', 'Kode Buku', 'Judul Buku', 'Pengarang', 'Tahun', 'Stok', 'Kategori'])
-                for r in data:
-                    writer.writerow([
-                        r['id'], r['kode_buku'], r['judul_buku'], 
-                        r['pengarang'], r['tahun_terbit'], r['stok'], r['kategori']
-                    ])
-            QMessageBox.information(self, "Sukses", f"Export berhasil!\n{filepath}")
-        except Exception as e:
-            QMessageBox.critical(self, "Error", str(e))
-
     def show_version(self):
         QMessageBox.information(self, "Versi", "Versi Aplikasi: 1.0.0 (Stable)\nBuild: 2026.04.25")
